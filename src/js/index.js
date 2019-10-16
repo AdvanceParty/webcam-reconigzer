@@ -9,18 +9,12 @@ import { train } from '@tensorflow/tfjs';
 
 let training = -1;
 
-/**
- * Animation function called on each frame, running prediction
- */
 async function animate() {
   statsPanel.begin();
-
   const stream = await Camera.getStream();
   processVideoFrame(stream, training);
   updateSummaryPanel(getModelClasses());
-
   statsPanel.end();
-
   requestAnimationFrame(animate);
 }
 
