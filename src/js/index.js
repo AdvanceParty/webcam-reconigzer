@@ -19,16 +19,17 @@ async function animate() {
 }
 
 const updateSummaryPanel = classInfo => {
-  let prediction;
+  let predictedClass = null;
   const list = classInfo.map(c => {
     const { exampleCount, confidence, isTopPrediction, classNum } = c;
-    prediction = isTopPrediction ? classNum : prediction;
+    predictedClass = isTopPrediction ? classNum : predictedClass;
     return `Class ${classNum} | ${confidence} confident (from ${exampleCount} samples`;
   });
 
-  prediction = prediction ? `<h2>${prediction}</h2>` : prediction;
+  const predictionText = predictedClass != null ? `Matched item: ${predictedClass}` : `Dunno what that is.`;
   const summary = `<p>${list.join('<br />')}</p>`;
-  setInfo(prediction + summary);
+
+  setInfo(`<h3>${predictionText}</h3>` + summary);
 };
 
 const setupCamera = async () => {
