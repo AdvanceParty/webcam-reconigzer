@@ -1,11 +1,8 @@
-import * as tf from '@tensorflow/tfjs';
-
 import Camera from './Camera';
 import { initStats, statsPanel } from './util';
 import * as config from './config';
-import { getButtons, getInfoPanel, setInfo } from './ui';
+import { getSaveAs, getButtons, getInfoPanel, setInfo } from './ui';
 import { processVideoFrame, initModel, getModelClasses } from './modelFunctions';
-import { train } from '@tensorflow/tfjs';
 
 let training = -1;
 
@@ -53,10 +50,17 @@ export async function start() {
 
   const mainEl = document.getElementById('main');
   const btnContainer = getButtons();
+  const saveAsContainer = getSaveAs();
   btnContainer.addEventListener('mousedown', e => trainForClass(Number(e.target.dataset.index)));
   btnContainer.addEventListener('mouseup', e => trainForClass(-1));
+
+  const saveBtn = saveAsContainer.querySelectorAll('button')[0];
+  // saveBtn.onclick = e => console.log(e.target);
+
   mainEl.appendChild(btnContainer);
   mainEl.appendChild(getInfoPanel());
+  mainEl.appendChild(saveAsContainer);
+
   setLoading(false);
 
   initStats();
